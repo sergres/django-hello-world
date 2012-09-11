@@ -1,4 +1,8 @@
 MANAGE=django-admin.py
+PIP=pip
+
+installdeps:
+	$(PIP) search django-annoying | grep INSTALL || sudo $(PIP) install django-annoying
 
 test:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=django_hello_world.settings $(MANAGE) test hello
@@ -8,3 +12,4 @@ run:
 
 syncdb:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=django_hello_world.settings $(MANAGE) syncdb --noinput
+
