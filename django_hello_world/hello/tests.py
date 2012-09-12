@@ -82,3 +82,10 @@ class FormTest(TestCase):
     def test_class_exisits(self):
         form = UserForm()
         form = ProfileForm()
+
+    def test_request_logs_view(self):
+        TEST_REQUEST = "/view_edit"
+        c = Client()
+        response = c.get(TEST_REQUEST)
+        requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
+        self.assertEqual(response.status_code, 200)
