@@ -14,10 +14,13 @@ class UserProfile(models.Model):
     skype = models.CharField(max_length=30)
     other_contacts = models.TextField()
 
-class UserAndProfileForm(ModelForm):
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        
+class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        
 
 class RequestsStorage(models.Model):
     REQUEST_TYPE_CHOISES = (
