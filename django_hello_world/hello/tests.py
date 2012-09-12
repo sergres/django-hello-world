@@ -30,6 +30,12 @@ class SimpleTest(TestCase):
             profile.bio
             profile.other_contacts
 
+    def test_requests_storage(self):
+            requests = RequestsStorage.objects.filter()
+            for request in requests:
+                request.time
+                request.body
+                request.type
 
 class HttpTest(TestCase):
     def test_home(self):
