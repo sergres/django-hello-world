@@ -51,3 +51,12 @@ class HttpTest(TestCase):
         self.assertContains(response, 'admin@example.com')
         self.assertContains(response, 'sergres@ubuntu-jabber.de')
         self.assertContains(response, '9543171')
+
+class RequestLoggerTest(TestCase):
+    def test_request_and_check_log(self):
+        c = Client()
+        response = c.get("/testrequest")
+        requests = RequestsStorage.objects.filter(body="/testrequest")
+        #logs are nod added if you are getting exception here
+        self.assertIsInstance(requests[0] , RequestsStorage)
+
