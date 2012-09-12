@@ -69,4 +69,7 @@ class RequestLoggerTest(TestCase):
         requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
         self.assertEqual(response.status_code, 200)
 
-
+class ContextProcessorTest(TestCase):
+        def test_my_context_processor(self):
+            settings = my_context_processor()
+            pass
