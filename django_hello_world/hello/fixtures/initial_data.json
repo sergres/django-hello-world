@@ -4,8 +4,8 @@
         "model": "auth.user", 
         "fields": {
             "username": "admin", 
-            "first_name": "", 
-            "last_name": "", 
+            "first_name": "Sergiy", 
+            "last_name": "Shchypa", 
             "is_active": true, 
             "is_superuser": true, 
             "is_staff": true, 
@@ -15,6 +15,19 @@
             "password": "sha1$b6575$27241f449f25136d2dad689f97cf3c1066cdc162", 
             "email": "admin@example.com", 
             "date_joined": "2011-08-19 09:53:08"
+        }
+    },
+
+    {
+        "pk": 1, 
+        "model": "hello.UserProfile", 
+        "fields": {
+            "user": "1",
+            "date_birth": "1984-07-06",
+            "bio": "some bio text",
+            "jabber": "sergres@ubuntu-jabber.de",
+            "skype": "sergres",
+            "other_contacts": "mob:050-9543171"
         }
     }
 ]
