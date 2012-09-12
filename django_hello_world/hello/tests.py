@@ -36,7 +36,7 @@ class SimpleTest(TestCase):
             for request in requests:
                 request.time
                 request.body
-                request.type
+                request.method
 
 class HttpTest(TestCase):
     def test_home(self):

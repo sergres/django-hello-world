@@ -20,5 +20,5 @@ class RequestsStorage(models.Model):
     )
     time = models.DateTimeField(auto_now=True)
     body = models.CharField(max_length=8192)
-    type = models.CharField(default="G", max_length=1, choices=REQUEST_TYPE_CHOISES)
+    method = models.CharField(default="G", max_length=1, choices=REQUEST_TYPE_CHOISES)
 
