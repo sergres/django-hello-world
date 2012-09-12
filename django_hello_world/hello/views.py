@@ -1,6 +1,6 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
-from django_hello_world.hello.models import RequestsStorage
+from django_hello_world.hello.models import *
 
 
 
@@ -14,3 +14,9 @@ def requestslog(request):
     requests = RequestsStorage.objects.order_by("-time").filter()[:10]
     return {'requests': requests}
 
+@render_to('hello/view_edit.html')
+def view_edit(request):
+    users = User.objects.filter()
+    user = users[0]
+    form_profile = UserProfile(user.get_profile())
+    return {'form_profile': form_profile}
