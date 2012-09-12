@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django_hello_world.hello.models import RequestsStorage
 from django_hello_world.hello.context_processors import my_context_processor
 
+from django.conf import LazySettings
 
 
 
@@ -70,7 +71,6 @@ class RequestLoggerTest(TestCase):
         requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
         self.assertEqual(response.status_code, 200)
 
-from django.conf import LazySettings
 
 class ContextProcessorTest(TestCase):
         def test_my_context_processor(self):
@@ -78,3 +78,6 @@ class ContextProcessorTest(TestCase):
             self.assertIsInstance(res_settings['settings'] , LazySettings)
             pass
 
+class FormTest(TestCase):
+    def test_class_exisits(self):
+        form = UserAndProfileForm()
