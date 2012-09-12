@@ -10,6 +10,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
 from django_hello_world.hello.models import RequestsStorage
+from django_hello_world.hello.context_processors import my_context_processor
 
 
 
@@ -69,7 +70,11 @@ class RequestLoggerTest(TestCase):
         requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
         self.assertEqual(response.status_code, 200)
 
+from django.conf import LazySettings
+
 class ContextProcessorTest(TestCase):
         def test_my_context_processor(self):
-            settings = my_context_processor()
+            res_settings = my_context_processor(123)
+            self.assertIsInstance(res_settings['settings'] , LazySettings)
             pass
+
