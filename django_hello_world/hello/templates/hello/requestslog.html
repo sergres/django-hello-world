@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Hello! This is a Django Hello World Project.</h3>
+
+<p>You can view last 10 log records stored in DB</p>
+{% for request in requests %}
+<table>
+<tr>
+    <td>{{ request.time }}</td>
+    <td>{{ request.method }}</td>
+    <td>{{ request.body }}</td>
+</tr>
+</table>
+{%endfor%}
+
+{% endblock content %}
