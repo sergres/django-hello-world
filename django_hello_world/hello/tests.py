@@ -54,7 +54,7 @@ class HttpTest(TestCase):
 
 class RequestLoggerTest(TestCase):
     def test_request_and_check_log(self):
-        TEST_REQUEST = "/testrequest"
+        TEST_REQUEST = "/requestslog"
         c = Client()
         response = c.get(TEST_REQUEST)
         requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
