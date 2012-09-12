@@ -144,3 +144,4 @@ LOGGING = {
         },
     }
 }
+AUTH_PROFILE_MODULE = "hello.UserProfile"

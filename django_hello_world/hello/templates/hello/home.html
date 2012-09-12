@@ -5,4 +5,20 @@
 
 <p>You can now go to <a href="{% url admin:index %}">admin interface</a> and change admin pasword</p>
 <p>Currently next users are registered: {% for user in users %}{{ user.username }} {% endfor %}</p>
+{% for user in users %}
+<table>
+<tr><td>{{ user.first_name }} </td>
+        <td rowspan="4">
+            Contacts<br/>
+            email:{{ user.email }}<br/>
+            Jabber ID: {{ user.get_profile.jabber }}<br/>
+            Skype ID: {{ user.get_profile.skype }}<br/>
+            Other contacts:{{ user.get_profile.other_contacts }}</td>
+    </tr>
+<tr><td>{{ user.last_name }} </td></tr>
+<tr><td>{{ user.get_profile.date_birth }} </td></tr>
+<tr><td>Bio:<br/>{{ user.get_profile.bio }} </td></tr>
+</table>
+{%endfor%}
+
 {% endblock content %}
