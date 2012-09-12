@@ -16,7 +16,14 @@ def requestslog(request):
 
 @render_to('hello/view_edit.html')
 def view_edit(request):
-    users = User.objects.filter()
-    user = users[0]
-    form_profile = UserProfile(user.get_profile())
+    if request.method == 'POST': # If the form has been submitted...
+        form_user = UserForm(instance=user)
+        form_profile = ProfileForm(instance=profile)
+    else:
+        users = User.objects.filter()
+        user = users[0]
+        profile = user.get_profile()
+        form_user = UserForm(instance=user)
+        form_profile = ProfileForm(instance=profile)
+
     return {'form_profile': form_profile}
