@@ -54,9 +54,12 @@ class HttpTest(TestCase):
 
 class RequestLoggerTest(TestCase):
     def test_request_and_check_log(self):
+        TEST_REQUEST = "/testrequest"
         c = Client()
-        response = c.get("/testrequest")
-        requests = RequestsStorage.objects.filter(body="/testrequest")
+        response = c.get(TEST_REQUEST)
+        requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
+        for request in requests:
+            self.assertEqual(request.body, TEST_REQUEST)
         #logs are nod added if you are getting exception here
         self.assertIsInstance(requests[0] , RequestsStorage)
 
