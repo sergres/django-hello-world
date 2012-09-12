@@ -62,4 +62,11 @@ class RequestLoggerTest(TestCase):
             self.assertEqual(request.body, TEST_REQUEST)
         #logs are nod added if you are getting exception here
         self.assertIsInstance(requests[0] , RequestsStorage)
+    def test_request_logs_view(self):
+        TEST_REQUEST = "/requestslog"
+        c = Client()
+        response = c.get(TEST_REQUEST)
+        requests = RequestsStorage.objects.filter(body = TEST_REQUEST)
+        self.assertEqual(response.status_code, 200)
+
 
