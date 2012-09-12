@@ -12,3 +12,13 @@ class UserProfile(models.Model):
     jabber =  models.EmailField()
     skype = models.CharField(max_length=30)
     other_contacts = models.TextField()
+
+class RequestsStorage(models.Model):
+    REQUEST_TYPE_CHOISES = (
+    ('G','GET'),
+    ('P','POST'),
+    )
+    time = models.DateTimeField(auto_now=True)
+    body = models.CharField(max_length=8192)
+    type = models.CharField(default="G", max_length=1, choices=REQUEST_TYPE_CHOISES)
+
