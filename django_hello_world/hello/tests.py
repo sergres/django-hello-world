@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
-from django_hello_world.hello.models import RequestsStorage
+from django_hello_world.hello.models import RequestsStorage,UserAndProfileForm
 from django_hello_world.hello.context_processors import my_context_processor
 
 from django.conf import LazySettings
