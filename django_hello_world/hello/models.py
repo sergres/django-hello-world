@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 from django.contrib.auth.models import User
 
@@ -12,6 +13,11 @@ class UserProfile(models.Model):
     jabber =  models.EmailField()
     skype = models.CharField(max_length=30)
     other_contacts = models.TextField()
+
+class UserAndProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        
 
 class RequestsStorage(models.Model):
     REQUEST_TYPE_CHOISES = (
