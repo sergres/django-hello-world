@@ -22,12 +22,15 @@ hello, {{form_user.first_name.value}}. <a href="/admin/logout">Logout</a>
             {% if current_image %}
                 <img src="{{ MEDIA_URL }}{{ current_image }}"/> <br/>
              {%endif%}
-            {{ form_profile.image }} </td></tr>
+            {% if request.user.is_authenticated %}
+                {{ form_profile.image }} 
+             {%endif%}
+            </td></tr>
     </table>
 
     </td>
     <!-- left fields -->
-    <td>
+    <td valign=top>
     <table >
         <tr><td> Contacts </td></tr>
         <tr><td> Email: {{ form_user.email }} </td></tr>
