@@ -15,7 +15,11 @@ class UserProfile(models.Model):
     jabber = models.EmailField()
     skype = models.CharField(max_length=30, blank=True)
     other_contacts = models.TextField(blank=True)
-    image = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True)
+    image = models.ImageField(upload_to='photos/', blank=True)
+
+    @property
+    def filename(self):
+        return self.file.name.rsplit('/', 1)[-1]
 
 
 class UserForm(ModelForm):

@@ -17,20 +17,34 @@ def requestslog(request):
 
 @render_to('hello/view_edit.html')
 def view_edit(request):
-    if request.method == 'POST':  # If the form has been submitted...
+    # If the form has been submitted.
+    if (request.method == 'POST'
+       and request.user.is_authenticated()) :  
+        # Get instances of objects, they will be saved
         user = User.objects.get(pk=1)
         profile = user.get_profile()
 
         form_user = UserForm(request.POST, instance=user)
         form_profile = ProfileForm(request.POST, instance=profile)
-        print form_profile.errors
+
         if form_user.is_valid() and form_profile.is_valid():
+            from django.core.files.base import ContentFile
             form_profile.save()
+            file_content = ContentFile(request.FILES['image'].read())
+            profile.image.save(request.FILES['image'].name, file_content)
+            form_user.save()
     else:
         users = User.objects.filter()
         user = users[0]
         profile = user.get_profile()
         form_user = UserForm(instance=user)
         form_profile = ProfileForm(instance=profile)
-
-    return {'form_profile': form_profile, 'form_user': form_user}
+    
+    if request.user.is_authenticated() :
+        return {'form_profile': form_profile, 
+                'form_user': form_user,
+                'request': request}
+    else:
+        return {'form_profile': profile,
+                'form_user': user,
+                'request': request}
