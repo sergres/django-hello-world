@@ -18,8 +18,14 @@ def requestslog(request):
 @render_to('hello/view_edit.html')
 def view_edit(request):
     if request.method == 'POST':  # If the form has been submitted...
-        form_user = UserForm(instance=user)
-        form_profile = ProfileForm(instance=profile)
+        user = User.objects.get(pk=1)
+        profile = user.get_profile()
+
+        form_user = UserForm(request.POST, instance=user)
+        form_profile = ProfileForm(request.POST, instance=profile)
+        print form_profile.errors
+        if form_user.is_valid() and form_profile.is_valid():
+            form_profile.save()
     else:
         users = User.objects.filter()
         user = users[0]
