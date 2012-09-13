@@ -27,4 +27,4 @@ def view_edit(request):
         form_user = UserForm(instance=user)
         form_profile = ProfileForm(instance=profile)
 
-    return {'form_profile': form_profile}
+    return {'form_profile': form_profile, 'form_user': form_user}
