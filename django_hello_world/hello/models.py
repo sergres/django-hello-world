@@ -10,12 +10,12 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     # Other fields here
-    date_birth = models.DateField()
-    bio = models.TextField()
+    date_birth = models.DateField(blank=True)
+    bio = models.TextField(blank=True)
     jabber = models.EmailField()
-    skype = models.CharField(max_length=30)
-    other_contacts = models.TextField()
-    image = models.ImageField(upload_to='photos/%Y/%m/%d')
+    skype = models.CharField(max_length=30, blank=True)
+    other_contacts = models.TextField(blank=True)
+    image = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True)
 
 
 class UserForm(ModelForm):
