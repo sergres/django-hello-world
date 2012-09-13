@@ -43,8 +43,10 @@ def view_edit(request):
     if request.user.is_authenticated() :
         return {'form_profile': form_profile, 
                 'form_user': form_user,
-                'request': request}
+                'request': request,
+                'current_image': profile.image}
     else:
         return {'form_profile': profile,
                 'form_user': user,
-                'request': request}
+                'request': request,
+                'current_image': profile.image}

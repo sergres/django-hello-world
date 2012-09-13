@@ -19,7 +19,9 @@ hello, {{form_user.first_name.value}}. <a href="/admin/logout">Logout</a>
         <tr><td> {{ form_user.last_name }} </td></tr>
         <tr><td> {{ form_profile.date_birth }} </td></tr>
         <tr><td> Photo:<br/>
-            <img src="{{ MEDIA_URL }}{{ form_profile.image.value }}"/> <br/>
+            {% if current_image %}
+                <img src="{{ MEDIA_URL }}{{ current_image }}"/> <br/>
+             {%endif%}
             {{ form_profile.image }} </td></tr>
     </table>
 
