@@ -2,13 +2,42 @@
 
 {% block content %}
 <h3>Hello!!! This is a Django Hello World Project.</h3>
-<form action="" method="post">{% csrf_token %}
+<p>
+{% if request.user.is_authenticated %}
+hello, {{form_user.first_name.value}}. <a href="/admin/logout">Logout</a>
+{% else %}
+<a href="/admin/login">Login</a>
+ {%endif%}
+</p>
+<form action="" method="post"  enctype="multipart/form-data">{% csrf_token %}
 
 <table border=1><tr>
-    <td><table>{{ form_user.as_table }}</table></td>
-    <td><table>{{ form_profile.as_table }}</table></td>
+    <!-- left fields -->
+    <td>
+    <table >
+        <tr><td> {{ form_user.first_name }} </td></tr>
+        <tr><td> {{ form_user.last_name }} </td></tr>
+        <tr><td> {{ form_profile.date_birth }} </td></tr>
+        <tr><td> Photo:<br/>
+            <img src="{{ MEDIA_URL }}{{ form_profile.image.value }}"/> <br/>
+            {{ form_profile.image }} </td></tr>
+    </table>
+
+    </td>
+    <!-- left fields -->
+    <td>
+    <table >
+        <tr><td> Contacts </td></tr>
+        <tr><td> Email: {{ form_user.email }} </td></tr>
+        <tr><td> Jabber: {{ form_profile.jabber }} </td></tr>
+        <tr><td> Skype: {{ form_profile.skype }} </td></tr>
+        <tr><td> Other Contacts:<br/> {{ form_profile.other_contacts }} </td></tr>
+    </table>
+    </td>
 </tr></table>
-<input type="submit" value="Submit" />
+<input type="submit" value="Save" />
 </form>
 
 {% endblock content %}
+
+
