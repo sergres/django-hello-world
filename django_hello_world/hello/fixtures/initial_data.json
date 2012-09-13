@@ -27,7 +27,8 @@
             "bio": "some bio text",
             "jabber": "sergres@ubuntu-jabber.de",
             "skype": "sergres",
-            "other_contacts": "mob:050-9543171"
+            "other_contacts": "mob:050-9543171",
+            "image": ""
         }
     }
 ]

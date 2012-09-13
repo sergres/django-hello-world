@@ -1,5 +1,6 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
+
 
 from django.contrib.auth.models import User
 
@@ -14,16 +15,30 @@ class UserProfile(models.Model):
     jabber = models.EmailField()
     skype = models.CharField(max_length=30)
     other_contacts = models.TextField()
+    image = models.ImageField(upload_to='photos/%Y/%m/%d')
 
 
 class UserForm(ModelForm):
     class Meta:
         model = User
+        fields = ('first_name',
+                  'last_name',
+                  'email',)
 
 
 class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
+        fields = ('date_birth',
+                  'jabber',
+                  'skype',
+                  'other_contacts',
+                  'image',
+                  'bio',)
+
+
+#class ImageForm(Form):
+#        image = models.ImageField()
 
 
 class RequestsStorage(models.Model):
