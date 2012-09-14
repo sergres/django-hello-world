@@ -4,9 +4,10 @@
 <h3>Hello!!! This is a Django Hello World Project.</h3>
 <p>
 {% if request.user.is_authenticated %}
-hello, {{user.first_name.value}}. <a href="/admin/logout">Logout</a>
+hello, {{user.first_name.value}}. <a href="{% url hello.views.my_logout %}?next={% url hello.views.view_edit %}">Logout</a>
 {% else %}
-<a href="/admin/login">Login</a>
+<a href="{% url django.contrib.auth.views.login %}?next={% url hello.views.view_edit %}">Login</a>
+
  {%endif%}
 </p>
 <form action="" method="post"  enctype="multipart/form-data">{% csrf_token %}

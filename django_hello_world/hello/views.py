@@ -1,6 +1,9 @@
 from annoying.decorators import render_to
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 from django_hello_world.hello.models import *
+from django.http import HttpResponseRedirect
+
 
 
 @render_to('hello/home.html')
@@ -51,3 +54,11 @@ def view_edit(request):
                 'user': user,
                 'request': request,
                 'current_image': profile.image}
+
+def my_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/view_edit')
+
+    
+
+
