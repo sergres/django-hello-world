@@ -1,5 +1,7 @@
 from django.db import models
-from django.forms import ModelForm, Form
+from django.forms import ModelForm, Form, DateInput, DateField
+from django.conf import settings
+
 
 
 from django.contrib.auth.models import User
@@ -30,7 +32,26 @@ class UserForm(ModelForm):
                   'email',)
 
 
+
+class MyDateInput(DateInput):
+
+    def render(self, name, value, attrs=None):
+        media ='<link rel="stylesheet" href="' + settings.STATIC_URL + 'jquery/themes/base/jquery.ui.all.css">' + \
+    '<script src="' + settings.STATIC_URL + 'jquery/jquery-1.8.0.js"></script>' + \
+    '<script src="' + settings.STATIC_URL + 'jquery/ui/jquery.ui.core.js"></script>' + \
+    '<script src="' + settings.STATIC_URL + 'jquery/ui/jquery.ui.widget.js"></script>' + \
+    '<script src="' + settings.STATIC_URL + 'jquery/ui/jquery.ui.datepicker.js"></script>' + \
+    """<script>
+    $(function() {
+        $( "#id_date_birth1" ).datepicker();
+    });
+    </script>
+"""
+        return media + super(MyDateInput, self).render(name, value, attrs)
+
+
 class ProfileForm(ModelForm):
+    date_birth1 = DateField(widget=MyDateInput)
     class Meta:
         model = UserProfile
         fields = ('date_birth',
@@ -39,10 +60,6 @@ class ProfileForm(ModelForm):
                   'other_contacts',
                   'image',
                   'bio',)
-
-
-#class ImageForm(Form):
-#        image = models.ImageField()
 
 
 class RequestsStorage(models.Model):
