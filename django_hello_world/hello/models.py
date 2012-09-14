@@ -34,6 +34,8 @@ class UserForm(ModelForm):
 
 
 class MyDateInput(DateInput):
+    def __init__(self, attrs=None, format=None):
+        super(MyDateInput, self).__init__(attrs, format)
 
     def render(self, name, value, attrs=None):
         media ='<link rel="stylesheet" href="' + settings.STATIC_URL + 'jquery/themes/base/jquery.ui.all.css">' + \
@@ -45,21 +47,25 @@ class MyDateInput(DateInput):
     $(function() {
         $( "#id_date_birth1" ).datepicker();
     });
+    $(function() {
+        $( "#id_date_birth" ).datepicker();
+    });
     </script>
 """
         return media + super(MyDateInput, self).render(name, value, attrs)
 
 
 class ProfileForm(ModelForm):
-    date_birth1 = DateField(widget=MyDateInput)
     class Meta:
         model = UserProfile
-        fields = ('date_birth',
+        fields = (
+                  'date_birth',
                   'jabber',
                   'skype',
                   'other_contacts',
                   'image',
                   'bio',)
+        widgets = { 'date_birth':MyDateInput, }
 
 
 class RequestsStorage(models.Model):

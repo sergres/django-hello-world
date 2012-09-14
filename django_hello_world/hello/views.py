@@ -37,6 +37,9 @@ def view_edit(request):
                 file_content = ContentFile(request.FILES['image'].read())
                 profile.image.save(request.FILES['image'].name, file_content)
             form_user.save()
+        else:  #lets look, what was wrong
+            #print "form_profile.errors=" +str(form_profile.errors)
+            #print "form_user.is_valid=" +str(form_user.is_valid())
     else:
         users = User.objects.filter()
         user = users[0]
