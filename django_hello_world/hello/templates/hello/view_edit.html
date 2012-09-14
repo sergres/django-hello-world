@@ -4,7 +4,7 @@
 <h3>Hello!!! This is a Django Hello World Project.</h3>
 <p>
 {% if request.user.is_authenticated %}
-hello, {{form_user.first_name.value}}. <a href="/admin/logout">Logout</a>
+hello, {{user.first_name.value}}. <a href="/admin/logout">Logout</a>
 {% else %}
 <a href="/admin/login">Login</a>
  {%endif%}
@@ -15,15 +15,15 @@ hello, {{form_user.first_name.value}}. <a href="/admin/logout">Logout</a>
     <!-- left fields -->
     <td>
     <table >
-        <tr><td> {{ form_user.first_name }} </td></tr>
-        <tr><td> {{ form_user.last_name }} </td></tr>
-        <tr><td> {{ form_profile.date_birth }} </td></tr>
+        <tr><td> {{ user.first_name }} </td></tr>
+        <tr><td> {{ user.last_name }} </td></tr>
+        <tr><td> {{ profile.date_birth }} </td></tr>
         <tr><td> Photo:<br/>
             {% if current_image %}
                 <img src="{{ MEDIA_URL }}{{ current_image }}"/> <br/>
              {%endif%}
             {% if request.user.is_authenticated %}
-                {{ form_profile.image }} 
+                {{ profile.image }} 
              {%endif%}
             </td></tr>
     </table>
@@ -33,11 +33,11 @@ hello, {{form_user.first_name.value}}. <a href="/admin/logout">Logout</a>
     <td valign=top>
     <table >
         <tr><td> Contacts </td></tr>
-        <tr><td> Email: {{ form_user.email }} </td></tr>
-        <tr><td> Jabber: {{ form_profile.jabber }} </td></tr>
-        <tr><td> Skype: {{ form_profile.skype }} </td></tr>
-        <tr><td> Other Contacts:<br/> {{ form_profile.other_contacts }} </td></tr>
-        <tr><td> Bio:<br/> {{ form_profile.bio }} </td></tr>
+        <tr><td> Email: {{ user.email }} </td></tr>
+        <tr><td> Jabber: {{ profile.jabber }} </td></tr>
+        <tr><td> Skype: {{ profile.skype }} </td></tr>
+        <tr><td> Other Contacts:<br/> {{ profile.other_contacts }} </td></tr>
+        <tr><td> Bio:<br/> {{ profile.bio }} </td></tr>
     </table>
     </td>
 </tr></table>

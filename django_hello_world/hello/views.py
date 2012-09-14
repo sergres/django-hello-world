@@ -30,8 +30,9 @@ def view_edit(request):
         if form_user.is_valid() and form_profile.is_valid():
             from django.core.files.base import ContentFile
             form_profile.save()
-            file_content = ContentFile(request.FILES['image'].read())
-            profile.image.save(request.FILES['image'].name, file_content)
+            if 'image' in request.FILES:
+                file_content = ContentFile(request.FILES['image'].read())
+                profile.image.save(request.FILES['image'].name, file_content)
             form_user.save()
     else:
         users = User.objects.filter()
@@ -41,12 +42,12 @@ def view_edit(request):
         form_profile = ProfileForm(instance=profile)
     
     if request.user.is_authenticated() :
-        return {'form_profile': form_profile, 
-                'form_user': form_user,
+        return {'profile': form_profile, 
+                'user': form_user,
                 'request': request,
                 'current_image': profile.image}
     else:
-        return {'form_profile': profile,
-                'form_user': user,
+        return {'profile': profile,
+                'user': user,
                 'request': request,
                 'current_image': profile.image}
