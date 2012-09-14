@@ -19,6 +19,11 @@ hello, {{user.first_name.value}}. <a href="{% url hello.views.my_logout %}?next=
         <tr><td> {{ user.first_name }} </td></tr>
         <tr><td> {{ user.last_name }} </td></tr>
         <tr><td> {{ profile.date_birth }} </td></tr>
+        <tr><td> 
+                {% autoescape off %}
+                {{ profile.date_birth1 }} 
+                {% endautoescape %}
+        </td></tr>
         <tr><td> Photo:<br/>
             {% if current_image %}
                 <img src="{{ MEDIA_URL }}{{ current_image }}"/> <br/>
