@@ -86,17 +86,14 @@ class FormTest(TestCase):
         form = UserForm()
         form = ProfileForm()
 
-    def test_request_logs_view(self):
+    def test_view_edit(self):
         TEST_REQUEST = "/view_edit"
         c = Client()
         response = c.get(TEST_REQUEST)
         requests = RequestsStorage.objects.filter(body=TEST_REQUEST)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'first_name')
-        self.assertContains(response, 'last_name')
-        self.assertContains(response, 'date_birth')
-        self.assertContains(response, 'skype')
-        self.assertContains(response, 'jabber')
-        self.assertContains(response, 'other_contacts')
-        self.assertContains(response, 'bio')
-        self.assertContains(response, 'image')
+        self.assertContains(response, 'Sergiy')
+        self.assertContains(response, 'Shchypa')
+        self.assertContains(response, '1984')
+        self.assertContains(response, 'Skype')
+        self.assertContains(response, '954')
