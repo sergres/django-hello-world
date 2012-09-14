@@ -2,4 +2,4 @@
 *.sqlite3
 *.swp
 *jpg
-static/admin
+static
