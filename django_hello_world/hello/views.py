@@ -5,7 +5,6 @@ from django_hello_world.hello.models import *
 from django.http import HttpResponseRedirect
 
 
-
 @render_to('hello/home.html')
 def home(request):
     users = User.objects.filter()
@@ -22,7 +21,7 @@ def requestslog(request):
 def view_edit(request):
     # If the form has been submitted.
     if (request.method == 'POST'
-       and request.user.is_authenticated()) :  
+            and request.user.is_authenticated()):
         # Get instances of objects, they will be saved
         user = User.objects.get(pk=1)
         profile = user.get_profile()
@@ -37,7 +36,8 @@ def view_edit(request):
                 file_content = ContentFile(request.FILES['image'].read())
                 profile.image.save(request.FILES['image'].name, file_content)
             form_user.save()
-        else:  #lets look, what was wrong
+        else:  # lets look, what was wrong
+            pass
             #print "form_profile.errors=" +str(form_profile.errors)
             #print "form_user.is_valid=" +str(form_user.is_valid())
     else:
@@ -46,9 +46,9 @@ def view_edit(request):
         profile = user.get_profile()
         form_user = UserForm(instance=user)
         form_profile = ProfileForm(instance=profile)
-    
-    if request.user.is_authenticated() :
-        return {'profile': form_profile, 
+
+    if request.user.is_authenticated():
+        return {'profile': form_profile,
                 'user': form_user,
                 'request': request,
                 'current_image': profile.image}
@@ -58,10 +58,7 @@ def view_edit(request):
                 'request': request,
                 'current_image': profile.image}
 
+
 def my_logout(request):
     logout(request)
     return HttpResponseRedirect('/view_edit')
-
-    
-
-

@@ -1,9 +1,6 @@
 from django.db import models
 from django.forms import ModelForm, Form, DateInput, DateField
 from django.conf import settings
-
-
-
 from django.contrib.auth.models import User
 
 
@@ -32,25 +29,29 @@ class UserForm(ModelForm):
                   'email',)
 
 
-
 class MyDateInput(DateInput):
     def __init__(self, attrs=None, format=None):
         super(MyDateInput, self).__init__(attrs, format)
 
     def render(self, name, value, attrs=None):
-        media ='<link rel="stylesheet" href="' + settings.STATIC_URL + 'jquery/themes/base/jquery.ui.all.css">' + \
-    '<script src="' + settings.STATIC_URL + 'jquery/jquery-1.8.0.js"></script>' + \
-    '<script src="' + settings.STATIC_URL + 'jquery/ui/jquery.ui.core.js"></script>' + \
-    '<script src="' + settings.STATIC_URL + 'jquery/ui/jquery.ui.widget.js"></script>' + \
-    '<script src="' + settings.STATIC_URL + 'jquery/ui/jquery.ui.datepicker.js"></script>' + \
-    """<script>
-    $(function() {
-        $( "#id_date_birth1" ).datepicker();
-    });
-    $(function() {
-        $( "#id_date_birth" ).datepicker();
-    });
-    </script>
+        media = '<link rel="stylesheet" href="' + settings.STATIC_URL +\
+            'jquery/themes/base/jquery.ui.all.css">' + \
+            '<script src="' + settings.STATIC_URL + \
+            'jquery/jquery-1.8.0.js"></script>' + \
+            '<script src="' + settings.STATIC_URL + \
+            'jquery/ui/jquery.ui.core.js"></script>' + \
+            '<script src="' + settings.STATIC_URL + \
+            'jquery/ui/jquery.ui.widget.js"></script>' + \
+            '<script src="' + settings.STATIC_URL + \
+            'jquery/ui/jquery.ui.datepicker.js"></script>' + \
+            """<script>
+            $(function() {
+                $( "#id_date_birth1" ).datepicker();
+            });
+            $(function() {
+                $( "#id_date_birth" ).datepicker();
+            });
+            </script>
 """
         return media + super(MyDateInput, self).render(name, value, attrs)
 
@@ -58,14 +59,13 @@ class MyDateInput(DateInput):
 class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = (
-                  'date_birth',
+        fields = ('date_birth',
                   'jabber',
                   'skype',
                   'other_contacts',
                   'image',
                   'bio',)
-        widgets = { 'date_birth':MyDateInput, }
+        widgets = {'date_birth': MyDateInput, }
 
 
 class RequestsStorage(models.Model):
