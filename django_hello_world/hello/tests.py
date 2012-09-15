@@ -97,3 +97,16 @@ class FormTest(TestCase):
         self.assertContains(response, '1984')
         self.assertContains(response, 'Skype')
         self.assertContains(response, '954')
+
+class T6Test(TestCase):
+    def test_login(self):
+        c = Client()
+        c.login(username='admin', password='admin')
+        #resp = c.post('/accounts/login?next=/view_edit', {'username': 'admin', 'password':'admin'})
+        TEST_REQUEST = "/view_edit"
+        resp = c.get(TEST_REQUEST)
+
+        print resp
+        self.assertEqual(resp.status_code, 200)
+        pass
+
