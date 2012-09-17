@@ -65,6 +65,7 @@ class HttpTest(TestCase):
         self.assertContains(response, '9543171')
 
 
+
 class RequestLoggerTest(TestCase):
     def test_request_and_check_log(self):
         """
@@ -108,41 +109,38 @@ class FormTest(TestCase):
         self.assertContains(response, '1984')
         self.assertContains(response, 'Skype')
         self.assertContains(response, '954')
+        # check if we gave 'profile' and 'user' into template
+        self.assertTrue('profile' in response.context)
+        self.assertTrue('user' in response.context)
 
 
 class T6Test(TestCase):
 
     fixtures = ['initial_data.json']
 
-    # def test_login_success(self):
-    #     c = Client()
-    #     resp = c.get('/accounts/login?next=/view_edit')
-    #     # print resp
-    #     resp = c.post('',
-    #         {'username': 'admin', 'password': 'admin'}, follow=True)
-    #     # resp
-    #     resp = c.get("/view_edit")
-
-    #     # print resp
-    #     # we are redirecting to /view_edit
-    #     self.assertEqual(resp.status_code, 200)
-
-    # def aatest_login_fail(self):
-    #     c = Client()
-    #     resp = c.post('/accounts/login?next=/view_edit',
-    #         {'username': 'admin', 'password': 'badpassword'}, follow=True)
-    #     # we are redirecting to /view_edit
-    #     # print resp
-    #     self.assertEqual(resp.status_code, 200)
-
-    def test_data_on_view_edit(self):
-        from django_hello_world.hello.models import User
-        users = User.objects.filter()
-        print users
+    def test_inputs_for_logged_in_user(self):
+        """
+        Check if inputs are displayed on /view_edit screen
+        of authentificated user
+        """
         c = Client()
-        print c.login(username='admin', password='admin')
+        c.login(username='admin', password='admin')
         TEST_REQUEST = "/view_edit"
         resp = c.get(TEST_REQUEST)
-        resp.dsdredirect_chain
+        self.assertContains(resp, "<input type=\"submit\"")
+        self.assertContains(resp, "<input id=\"id_email\"")
+        self.assertContains(resp, "<input id=\"id_skype\"")
+        self.assertContains(resp, "<textarea id=\"id_other_contacts\"")
 
-        pass
+    def test_inputs_for_not_logged_in_user(self):
+        """
+        Check if inputs are NOT displayed on /view_edit screen
+        of NOT authentificated user
+        """
+        c = Client()
+        TEST_REQUEST = "/view_edit"
+        resp = c.get(TEST_REQUEST)
+        self.assertNotContains(resp, "<input type=\"submit\"")
+        self.assertNotContains(resp, "<input id=\"id_email\"")
+        self.assertNotContains(resp, "<input id=\"id_skype\"")
+        self.assertNotContains(resp, "<textarea id=\"id_other_contacts\"")
