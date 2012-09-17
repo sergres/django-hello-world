@@ -53,16 +53,16 @@ class HttpTest(TestCase):
         Testing that page returned by function home - contanis data about admin user(from fixtures)
         """
         c = Client()
-        response = c.get(reverse('home'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Hello!')
-        self.assertContains(response, 'Sergiy')
-        self.assertContains(response, 'Shchypa')
-        self.assertContains(response, 'July')
-        self.assertContains(response, 'some bio text')
-        self.assertContains(response, 'admin@example.com')
-        self.assertContains(response, 'sergres@ubuntu-jabber.de')
-        self.assertContains(response, '9543171')
+        resp = c.get(reverse('home'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Hello!')
+        self.assertContains(resp, 'Sergiy')
+        self.assertContains(resp, 'Shchypa')
+        self.assertContains(resp, 'July')
+        self.assertContains(resp, 'some bio text')
+        self.assertContains(resp, 'admin@example.com')
+        self.assertContains(resp, 'sergres@ubuntu-jabber.de')
+        self.assertContains(resp, '9543171')
 
 
 
@@ -83,8 +83,8 @@ class RequestLoggerTest(TestCase):
     def test_request_logs_view(self):
         TEST_REQUEST = "/requestslog"
         c = Client()
-        response = c.get(TEST_REQUEST)
-        self.assertEqual(response.status_code, 200)
+        resp = c.get(TEST_REQUEST)
+        self.assertEqual(resp.status_code, 200)
 
 
 class ContextProcessorTest(TestCase):
@@ -102,16 +102,16 @@ class FormTest(TestCase):
     def test_view_edit(self):
         TEST_REQUEST = "/view_edit"
         c = Client()
-        response = c.get(TEST_REQUEST)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Sergiy')
-        self.assertContains(response, 'Shchypa')
-        self.assertContains(response, '1984')
-        self.assertContains(response, 'Skype')
-        self.assertContains(response, '954')
+        resp = c.get(TEST_REQUEST)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Sergiy')
+        self.assertContains(resp, 'Shchypa')
+        self.assertContains(resp, '1984')
+        self.assertContains(resp, 'Skype')
+        self.assertContains(resp, '954')
         # check if we gave 'profile' and 'user' into template
-        self.assertTrue('profile' in response.context)
-        self.assertTrue('user' in response.context)
+        self.assertTrue('profile' in resp.context)
+        self.assertTrue('user' in resp.context)
 
 
 class T6Test(TestCase):
@@ -144,3 +144,18 @@ class T6Test(TestCase):
         self.assertNotContains(resp, "<input id=\"id_email\"")
         self.assertNotContains(resp, "<input id=\"id_skype\"")
         self.assertNotContains(resp, "<textarea id=\"id_other_contacts\"")
+
+
+class T8Test(TestCase):
+
+    fixtures = ['initial_data.json']
+
+    def test_inputs_for_logged_in_user(self):
+        """
+        Check if we are using right template
+        """
+        c = Client()
+        c.login(username='admin', password='admin')
+        TEST_REQUEST = "/custom_tag"
+        resp = c.get(TEST_REQUEST)
+        self.assertEqual(resp.status_code, 200)
