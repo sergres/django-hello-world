@@ -152,7 +152,8 @@ class T8Test(TestCase):
 
     def test_inputs_for_logged_in_user(self):
         """
-        Check if we are using right template
+        Check if we are /custom_tag handler exists
+        and, it should returm 200 for logged in user
         """
         c = Client()
         c.login(username='admin', password='admin')
