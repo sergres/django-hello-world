@@ -61,8 +61,10 @@ def view_edit(request):
 
 
 def my_logout(request):
+    # TODO: add check of request.GET
     logout(request)
-    return HttpResponseRedirect('/view_edit')
+    print request.GET['next']
+    return HttpResponseRedirect(request.GET['next'])
 
 
 @login_required
