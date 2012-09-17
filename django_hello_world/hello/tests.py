@@ -150,7 +150,7 @@ class T8Test(TestCase):
 
     fixtures = ['initial_data.json']
 
-    def test_inputs_for_logged_in_user(self):
+    def test_custom_tag_for_logged_in_user(self):
         """
         Check if we are /custom_tag handler exists
         and, it should returm 200 for logged in user
@@ -160,3 +160,14 @@ class T8Test(TestCase):
         TEST_REQUEST = "/custom_tag"
         resp = c.get(TEST_REQUEST)
         self.assertEqual(resp.status_code, 200)
+
+    def test_redirect_from_custom_tag_unlogged_user(self):
+        """
+        Check if we are /custom_tag handler exists
+        and, it should returm 200 for logged in user
+        """
+        c = Client()
+        #c.login(username='admin', password='admin')
+        TEST_REQUEST = "/custom_tag"
+        resp = c.get(TEST_REQUEST, Follow=True)
+        self.assertEqual(resp.status_code, 302)
