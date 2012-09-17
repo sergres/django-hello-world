@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^requestslog$', 'django_hello_world.hello.views.requestslog'),
     url(r'^view_edit$', 'django_hello_world.hello.views.view_edit'),
     url(r'^accounts/logout/$', 'django_hello_world.hello.views.my_logout'),
+    url(r'^custom_tag$', 'django_hello_world.hello.views.custom_tag'),
     # url(r'^django_hello_world/', include('django_hello_world.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

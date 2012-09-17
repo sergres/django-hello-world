@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django_hello_world.hello.models import *
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 
 @render_to('hello/home.html')
@@ -62,3 +63,9 @@ def view_edit(request):
 def my_logout(request):
     logout(request)
     return HttpResponseRedirect('/view_edit')
+
+
+@login_required
+@render_to('hello/view_edit.html')
+def custom_tag(request):
+    return {}
