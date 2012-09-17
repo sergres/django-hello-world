@@ -1,0 +1,23 @@
+{
+    "folders":
+    [
+        {
+            "path": "/Users/sergres/projects/42/django-hello-world/"
+        },
+        {
+            "path": "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7"
+        },
+        {
+            "path": "/Users/sergres/projects/42/django-hello-world/django_hello_world/hello/"
+        }
+    ],
+    "build_systems":
+    [
+        {
+            "name": "List",
+            "cmd": ["make", "test"],
+            "working_dir": "${project_path"
+        }
+    ]
+
+}
