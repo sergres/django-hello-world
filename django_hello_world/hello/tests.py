@@ -171,3 +171,9 @@ class T8Test(TestCase):
         TEST_REQUEST = "/custom_tag"
         resp = c.get(TEST_REQUEST, Follow=True)
         self.assertEqual(resp.status_code, 302)
+
+    def test_check_tag_results(self):
+        from django_hello_world.hello.templatetags import edit_link
+        print edit_link.edit_link("SSSS")
+        pass
+
