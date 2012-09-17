@@ -66,6 +66,6 @@ def my_logout(request):
 
 
 @login_required
-@render_to('hello/view_edit.html')
+@render_to('hello/custom_tag.html')
 def custom_tag(request):
-    return {}
+    return {'request': request}
