@@ -214,10 +214,8 @@ class T9Test(TestCase):
         #f = os.popen("./manage.py " ,self.command_name)
         f = os.popen("./manage.py list_models")
         for i in f.readlines():
-            #TODO: add validation
-            if True:
-                print "#TODO: add validation into test_run_custom_command"
-                return
+                if i.find('django.contrib.auth.models.User') != -1:
+                    return
 
         raise Exception("cannot find command \"",
             self.command_name, "\" in file ./manage.py")

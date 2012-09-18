@@ -1,4 +1,5 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand 
+from django.contrib.contenttypes.models import ContentType
 
 
 class Command(BaseCommand):
@@ -6,8 +7,6 @@ class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
 
     def handle(self, *args, **options):
-        self.stdout.write('models: M1, M2, M3\n')
-        from django.contrib.contenttypes.models import ContentType
 
         for ct in ContentType.objects.all():
             m = ct.model_class()
