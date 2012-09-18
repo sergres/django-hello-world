@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand 
 from django.contrib.contenttypes.models import ContentType
+import sys
+
 
 
 class Command(BaseCommand):
@@ -10,6 +12,8 @@ class Command(BaseCommand):
 
         for ct in ContentType.objects.all():
             m = ct.model_class()
-            print "%s.%s\t%d" % (m.__module__, m.__name__, m._default_manager.count())
+            print  "%s.%s\t%d" % (m.__module__, m.__name__, m._default_manager.count())
+            print >> sys.stderr, "error: %s.%s\t%d" % (m.__module__, m.__name__, m._default_manager.count())
+
 
 
