@@ -174,6 +174,10 @@ class T8Test(TestCase):
 
     def test_check_tag_results(self):
         from django_hello_world.hello.templatetags import edit_link
-        print edit_link.edit_link("SSSS")
+        users = User.objects.filter()
+        user = users[0]
+        edit_link = edit_link.edit_link(user)
+        position = edit_link.find("a href=\"/admin/auth/user")
+        if 1 != position:
+            raise Exception("my tag edit_link returned error for" + user)
         pass
-
