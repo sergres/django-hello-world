@@ -181,3 +181,25 @@ class T8Test(TestCase):
         if 1 != position:
             raise Exception("my tag edit_link returned error for" + user)
         pass
+
+
+class T9Test(TestCase):
+
+    fixtures = ['initial_data.json']
+    command_name = 'list_models'
+
+    def test_run_custom_command(self):
+        """
+        run ./manage.py  and find if it outputs list_models
+        """
+        import os
+        path = os.path.dirname(os.path.abspath(__file__)) + '/../'
+        os.chdir(path)
+        f = os.popen("./manage.py ")
+        for i in f.readlines():
+            if i.find(self.command_name) != -1:
+                print "", i
+                return
+
+        raise Exception("cannot find command \"",
+            self.command_name, "\" in file ./manage.py")
