@@ -3,7 +3,15 @@
 {% block content %}
 <h3>Hello!!! This is a Django Hello World Project.</h3>
 <p>
+
 {% if request.user.is_authenticated %}
+
+{% load edit_link %}
+
+
+{% edit_link group %}
+{% edit_link request.user %}
+
 hello, {{user.first_name.value}}. <a href="{% url hello.views.my_logout %}?next={% url hello.views.view_edit %}">Logout</a>
 {% else %}
 <a href="{% url django.contrib.auth.views.login %}?next={% url hello.views.view_edit %}">Login</a>
@@ -20,9 +28,9 @@ hello, {{user.first_name.value}}. <a href="{% url hello.views.my_logout %}?next=
         <tr><td> {{ user.first_name }} </td></tr>
         <tr><td> {{ user.last_name }} </td></tr>
         <tr><td> 
-                {% autoescape off %}
-                {{ profile.date_birth }} 
-                {% endautoescape %}
+                
+                {{ profile.date_birth|safe }} 
+                
         </td></tr>
         <tr><td> Photo:<br/>
             {% if current_image %}
