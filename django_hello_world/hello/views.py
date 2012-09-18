@@ -1,5 +1,5 @@
 from annoying.decorators import render_to
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import logout
 from django_hello_world.hello.models import *
 from django.http import HttpResponseRedirect
@@ -44,15 +44,20 @@ def view_edit(request):
     else:
         users = User.objects.filter()
         user = users[0]
+
         profile = user.get_profile()
         form_user = UserForm(instance=user)
         form_profile = ProfileForm(instance=profile)
 
     if request.user.is_authenticated():
+        groups = Group.objects.filter()
+        group = groups[0]
+
         return {'profile': form_profile,
                 'user': form_user,
                 'request': request,
-                'current_image': profile.image}
+                'current_image': profile.image,
+                'group': group}
     else:
         return {'profile': profile,
                 'user': user,
