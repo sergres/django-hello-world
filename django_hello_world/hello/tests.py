@@ -198,7 +198,7 @@ class T9Test(TestCase):
         f = os.popen("./manage.py ")
         for i in f.readlines():
             if i.find(self.command_name) != -1:
-                print "", i
+                #print "", i
                 return
 
         raise Exception("cannot find command \"",
