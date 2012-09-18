@@ -51,18 +51,25 @@ def view_edit(request):
 
     if request.user.is_authenticated():
         groups = Group.objects.filter()
-        group = groups[0]
-
-        return {'profile': form_profile,
+        if len(groups):
+            group = groups[0]
+            template_vars = {'profile': form_profile,
                 'user': form_user,
                 'request': request,
                 'current_image': profile.image,
                 'group': group}
+        else:
+            template_vars = {'profile': form_profile,
+                'user': form_user,
+                'request': request,
+                'current_image': profile.image}
+
     else:
-        return {'profile': profile,
+        template_vars = {'profile': profile,
                 'user': user,
                 'request': request,
                 'current_image': profile.image}
+    return template_vars
 
 
 def my_logout(request):
