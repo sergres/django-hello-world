@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm, Form, DateInput, DateField
+from django.forms import ModelForm, Form, DateInput 
 from django.conf import settings
 from django.contrib.auth.models import User
 
@@ -77,3 +77,27 @@ class RequestsStorage(models.Model):
     body = models.CharField(max_length=8192)
     method = models.CharField(default="G", max_length=1,
                               choices=REQUEST_TYPE_CHOISES)
+
+
+class SignalStorage(models.Model):
+    SIGNAL_TYPE_CHOISES = (
+        ('C', 'create'),
+        ('D', 'delete'),
+        ('E', 'edit'))
+
+    class Meta:
+        verbose_name = ('Storage of all singals')
+        verbose_name_plural = ('SignalStorages')
+
+    def __unicode__(self):
+        pass
+
+    """docstring for SignalStorage"""
+    def __init__(self, action):
+        super(SignalStorage, self).__init__()
+        self.action = action
+
+    action = models.CharField(max_length=1, choices=SIGNAL_TYPE_CHOISES)
+    time = models.DateTimeField(auto_now=True)
+    model_name = models.CharField(max_length=300)
+
