@@ -188,7 +188,7 @@ class T9Test(TestCase):
     fixtures = ['initial_data.json']
     command_name = 'list_models'
 
-    def test_run_custom_command(self):
+    def test_managepy_output(self):
         """
         run ./manage.py  and find if it outputs list_models
         """
@@ -197,6 +197,23 @@ class T9Test(TestCase):
         os.chdir(path)
         f = os.popen("./manage.py ")
         for i in f.readlines():
+            if i.find(self.command_name) != -1:
+                print "", i
+                return
+
+        raise Exception("cannot find command \"",
+            self.command_name, "\" in file ./manage.py")
+
+    def test_run_custom_command(self):
+        """
+        run ./manage.py list_models and check output
+        """
+        import os
+        path = os.path.dirname(os.path.abspath(__file__)) + '/../'
+        os.chdir(path)
+        f = os.popen("./manage.py " + self.command_name)
+        for i in f.readlines():
+            #TODO: add velidation
             if i.find(self.command_name) != -1:
                 print "", i
                 return
