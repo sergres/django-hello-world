@@ -5,6 +5,8 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
+from django.db.models import signals
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
@@ -219,3 +221,17 @@ class T9Test(TestCase):
 
         raise Exception("cannot find command \"",
             self.command_name, "\" in file ./manage.py")
+
+
+class T10Test(TestCase):
+
+    def test_save_singal(self):
+        """
+        send  post_save signal, and check if it was logged to DB
+        """
+        signals.post_save.send(sender=self.__class__, instance=self)
+        signal_storage = SignalStorage.objects.all()
+        print signal_storage
+        if len(signal_storage) == 0:
+            raise Exception("No SignalStorage records, after signal was sent ")
+        return
