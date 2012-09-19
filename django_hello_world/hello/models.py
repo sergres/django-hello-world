@@ -1,7 +1,10 @@
 from django.db import models
-from django.forms import ModelForm, Form, DateInput 
+from django.forms import ModelForm, DateInput
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save, post_init, post_delete
+import datetime
 
 
 class UserProfile(models.Model):
@@ -90,14 +93,40 @@ class SignalStorage(models.Model):
         verbose_name_plural = ('SignalStorages')
 
     def __unicode__(self):
-        pass
+        result = 'action:' + self.action + "\n" + \
+                 'Modelname:' + self.model_name + "\n" + \
+                 'time:' + str(self.time) + "\n"
+        return result
 
-    """docstring for SignalStorage"""
-    def __init__(self, action):
-        super(SignalStorage, self).__init__()
-        self.action = action
+    action = models.CharField(max_length=1, choices=SIGNAL_TYPE_CHOISES, default='create')
+    time = models.DateTimeField(default=datetime.datetime.now)
+    model_name = models.CharField(max_length=300, default="DefaultModel")
 
-    action = models.CharField(max_length=1, choices=SIGNAL_TYPE_CHOISES)
-    time = models.DateTimeField(auto_now=True)
-    model_name = models.CharField(max_length=300)
 
+
+@receiver(post_save)
+def post_save_to_db(sender, **kwargs):
+    save_signal_to_db(sender, action='save')
+    pass
+
+
+@receiver(post_delete)
+def post_delete_to_db(sender, **kwargs):
+    save_signal_to_db(sender, action='delete')
+    pass
+
+
+@receiver(post_init)
+def post_init_to_db(sender, **kwargs):
+    save_signal_to_db(sender, action='init')
+    pass
+
+
+def save_signal_to_db(sender, action):
+    if 'SignalStorage' == sender.__name__:
+        return
+    #print kwargs['signal']
+    #print sender
+    signal_record = SignalStorage(action=action, model_name=sender.__name__)
+    #print signal_record
+    signal_record.save()
