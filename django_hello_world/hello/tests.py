@@ -224,14 +224,30 @@ class T9Test(TestCase):
 
 
 class T10Test(TestCase):
+    fixtures = ['initial_data.json']
 
-    def test_save_singal(self):
+    def test_check_sig_are_stord_during_db_load(self):
+        signal_storage = SignalStorage.objects.all()[:100]
+        #for sig in signal_storage:
+        #    print sig
+        if len(signal_storage) == 0:
+            raise Exception("No SignalStorage records, after signal was sent ")
+        pass
+
+
+    def test_save_to_db(self):
         """
-        send  post_save signal, and check if it was logged to DB
+        send  post_delete signal, and check if it was logged to DB
         """
-        signals.post_save.send(sender=self.__class__, instance=self)
-        signal_storage = SignalStorage.objects.all()
-        print signal_storage
+        signals.post_delete.send(sender=self.__class__, instance=self)
+        signals.post_delete.send(sender=self.__class__, instance=self)
+        signals.post_delete.send(sender=self.__class__, instance=self)
+        #save_signal_to_db(sender=self, "my_custom_action")
+        signal_storage = SignalStorage.objects.filter(model_name='T10Test').order_by('-time')[:3]
+        for sig in signal_storage:
+            if 'delete' != sig.action :
+                pass
+
         if len(signal_storage) == 0:
             raise Exception("No SignalStorage records, after signal was sent ")
         return
